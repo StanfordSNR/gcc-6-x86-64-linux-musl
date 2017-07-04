@@ -1,0 +1,5 @@
+usr/x86_64-linux-musl
+usr/bin
+usr/lib/gcc/x86_64-linux-musl
+usr/libexec/gcc/x86_64-linux-musl
+usr/lib/libcc1.so.0 usr/lib/libcc1.so.0.0.0 /usr/lib/x86_64-linux-musl

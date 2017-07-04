@@ -1,0 +1,13 @@
+Source: gcc-6-x86-64-linux-musl
+Section: devel
+Priority: extra
+Maintainer: Keith Winstein <keithw@cs.stanford.edu>
+Standards-Version: 3.9.8
+Build-Depends: debhelper, gcc-6-source, musl-sysroot, autoconf2.64, autogen, bison,
+      chrpath, debhelper, flex, gawk, gettext, libisl-dev, libmpc-dev,
+      libmpfr-dev, libgc-dev, patchutils, quilt, realpath, sharutils, texinfo,
+      xz-utils, zlib1g-dev, python3
+
+Package: gcc-6-x86-64-linux-musl
+Architecture: amd64
+Description: Cross-compiler (gcc and g++) targetting musl-linux-amd64

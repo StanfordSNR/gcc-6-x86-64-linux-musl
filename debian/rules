@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+ORIG_SRC := /usr/src/gcc-6
+ORIG_DEB := ${ORIG_SRC}/debian
+VER_GCC := $(shell dpkg-parsechangelog -l${ORIG_DEB}/changelog | egrep '^Version:' | cut -f 2 -d ' '|cut -f 1 -d '-')
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=-format
+-include /usr/share/dpkg/buildflags.mk
+
+%:
+	mkdir -p src
+	dh $@ --sourcedirectory=src --builddirectory=build
+
+override_dh_update_autotools_config:
+	tar xf ${ORIG_SRC}/gcc-${VER_GCC}.tar.xz
+	rm -rf src build
+	mv gcc-${VER_GCC} src
+	cp -av ${ORIG_DEB}/rules.patch ${ORIG_DEB}/*.uue ${ORIG_DEB}/patches/ ./debian/
+	make -fdebian/rules.patch stampdir=. patch_stamp=my-patch-stamp my-patch-stamp USE_CPUS=1
+	mkdir build
+
+override_dh_autoreconf:
+
+override_dh_auto_configure:
+	cd build && ../src/configure --prefix=/usr --with-sysroot=/usr/x86_64-linux-musl --enable-languages=c,c++ --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-musl --disable-multilib --disable-libsanitizer --with-native-system-header-dir=/include
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	make -C build install DESTDIR=${CURDIR}/debian/tmp AM_UPDATE_INFO_DIR=no
+
+override_dh_shlibdeps:
