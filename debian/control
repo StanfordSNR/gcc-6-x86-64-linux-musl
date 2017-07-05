@@ -9,5 +9,6 @@ Build-Depends: debhelper, gcc-6-source, musl-sysroot, autoconf2.64, autogen, bis
       xz-utils, zlib1g-dev, python3
 
 Package: gcc-6-x86-64-linux-musl
+Depends: musl-sysroot, g++-6
 Architecture: amd64
 Description: Cross-compiler (gcc and g++) targetting musl-linux-amd64
